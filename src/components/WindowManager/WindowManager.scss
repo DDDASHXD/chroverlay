@@ -1,0 +1,71 @@
+.WindowManager {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 99;
+  pointer-events: none;
+
+  .window {
+    position: fixed;
+    background: white;
+    resize: both;
+    overflow: auto;
+    overflow-y: hidden;
+    border: 1px solid var(--stroke);
+    border-radius: var(--radius);
+    pointer-events: all;
+    width: 800px;
+    height: 600px;
+    min-width: 400px;
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+
+    .titlebar {
+      background: var(--surface-0);
+      display: flex;
+      justify-content: center;
+      user-select: none;
+      padding: 10px;
+      position: relative;
+
+      .close {
+        width: 15px;
+        height: 15px;
+        background: var(--close);
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        border-radius: 50%;
+
+        &:hover {
+          filter: brightness(.8)
+        }
+      }
+
+      .search {
+        width: 70%;
+        input {
+          border: 1px solid var(--stroke);
+          background: var(--surface-1);
+          padding: 5px 10px;
+          border-radius: var(--radius);
+          width: 100%;
+
+          &:focus {
+            border-color: var(--stroke-light);
+            outline: none;
+          }
+        }
+      }
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
