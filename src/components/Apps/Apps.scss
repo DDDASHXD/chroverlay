@@ -8,6 +8,7 @@
   left: 3rem;
   top: 50%;
   transform: translateY(-50%);
+  width: 22rem;
 
   h1 {
     margin-bottom: 20px;
@@ -46,6 +47,35 @@
       padding: 7px;
       cursor: pointer;
       user-select: none;
+      position: relative;
+
+      &:hover {
+        .remove {
+          opacity: 1;
+        }
+      }
+
+      .remove {
+        position: absolute;
+        z-index: 99;
+        background: var(--surface-1);
+        border: 1px solid var(--stroke);
+        border-radius: var(--radius);
+        padding: 0px;
+        width: 25px;
+        display: grid;
+        place-items: center;
+        aspect-ratio: 1 / 1;
+        top: 10px;
+        right: 10px;
+        opacity: 0;
+        transition: opacity 0.25s ease;
+
+        &:hover {
+          background: var(--surface-2);
+          border-color: var(--stroke-light);
+        }
+      }
 
       img {
         width: 5rem;
@@ -53,6 +83,7 @@
         object-fit: cover;
         border-radius: var(--radius);
         margin-bottom: 5px;
+        pointer-events: none;
       }
     }
   }

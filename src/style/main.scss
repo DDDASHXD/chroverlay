@@ -5,9 +5,12 @@
   --fg: white;
 
   --close: rgb(226, 41, 41);
+  --confirm: rgb(41, 90, 226);
+  --confirm-border: rgb(63, 110, 240);
 
   --surface-0: #070707;
   --surface-1: #0f0f0f;
+  --surface-2: #242424;
 
   --stroke: #242424;
   --stroke-light: #3b3b3b;
@@ -25,4 +28,5 @@
 
 body {
   background: var(--bg);
+  user-select: none;
 }

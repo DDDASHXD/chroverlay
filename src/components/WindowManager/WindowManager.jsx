@@ -12,6 +12,7 @@ const WindowManager = (props) => {
           type={window.type}
           id={window.id}
           removeWindow={(id) => props.removeWindow(id)}
+          saveApp={(app) => props.saveApp(app)}
         />
       ))}
     </div>

@@ -10,7 +10,7 @@ function createWindow() {
     height: 600,
     webPreferences: {
       nodeIntegration: true,
-      webSecurity: false,
+      webviewTag: true,
     },
     transparent: true,
     frame: false,
