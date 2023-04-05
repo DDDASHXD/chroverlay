@@ -85,6 +85,24 @@
         margin-bottom: 5px;
         pointer-events: none;
       }
+
+      p {
+        max-width: 6rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .renamer {
+        background: transparent;
+        border: 1px solid var(--stroke);
+        border-radius: var(--radius);
+        max-width: 5rem;
+
+        &:focus {
+          outline: none;
+          border-color: var(--stroke-light);
+        }
+      }
     }
   }
 }

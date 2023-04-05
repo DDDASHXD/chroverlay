@@ -2,7 +2,7 @@ import Apps from "./components/Apps/Apps";
 import "./style/main.scss";
 import React from "react";
 import WindowManager from "./components/WindowManager/WindowManager";
-import { getApps, addApp, removeApp } from "./storage/storage";
+import { getApps, addApp, removeApp, renameApp } from "./storage/storage";
 
 function App() {
   const [windows, setWindows] = React.useState([]);
@@ -24,6 +24,11 @@ function App() {
 
   const deleteApp = (id) => {
     removeApp(id);
+    setApps(getApps());
+  };
+
+  const setName = (id, name) => {
+    renameApp(id, name);
     setApps(getApps());
   };
 
@@ -51,6 +56,7 @@ function App() {
         apps={apps}
         spawnWindow={(app) => spawnWindow(app)}
         deleteApp={(id) => deleteApp(id)}
+        setName={(id, name) => setName(id, name)}
       />
       <WindowManager
         windows={windows}

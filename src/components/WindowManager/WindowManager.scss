@@ -11,8 +11,7 @@
     position: fixed;
     background: white;
     resize: both;
-    overflow: auto;
-    overflow-y: hidden;
+    overflow: hidden;
     border: 1px solid var(--stroke);
     border-radius: var(--radius);
     pointer-events: all;
@@ -33,7 +32,6 @@
 
     &.type-browser {
       .titlebar {
-        justify-content: start;
         gap: 10px;
       }
     }
@@ -144,11 +142,22 @@
       }
 
       .search {
-        width: 70%;
+        width: 40%;
+        transition: width 0.25s ease;
+        position: relative;
+
+        .sslIcon {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          left: 7px;
+        }
+
         input {
           border: 1px solid var(--stroke);
           background: var(--surface-1);
           padding: 5px 10px;
+          padding-left: 25px;
           border-radius: var(--radius);
           width: 100%;
 
@@ -156,6 +165,10 @@
             border-color: var(--stroke-light);
             outline: none;
           }
+        }
+
+        &:focus-within {
+          width: 42%;
         }
       }
 
@@ -179,7 +192,7 @@
           transform: translateY(1px);
         }
       }
-      
+
       .navBtn {
         background: var(--surface-2);
         border: 1px solid var(--stroke);
@@ -188,6 +201,10 @@
         display: grid;
         place-items: center;
         aspect-ratio: 1 / 1;
+
+        &.reload.loading.icon {
+          animation: loaderSpinning 0.5s linear;
+        }
 
         &:focus {
           border-color: var(--stroke-light);
@@ -201,6 +218,10 @@
         &:active {
           transform: translateY(1px);
         }
+
+        &:disabled {
+          pointer-events: none;
+        }
       }
     }
 
@@ -208,5 +229,14 @@
       width: 100%;
       height: 100%;
     }
+  }
+}
+
+@keyframes loaderSpinning {
+  0% {
+    rotate: 0deg;
+  }
+  100% {
+    rotate: 360deg;
   }
 }

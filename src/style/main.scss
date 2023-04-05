@@ -3,8 +3,10 @@
 :root {
   --bg: rgba(0, 0, 0, 0.527);
   --fg: white;
+  --fg-gray: rgb(97, 97, 97);
 
   --close: rgb(226, 41, 41);
+  --success: rgb(82, 211, 78);
   --confirm: rgb(41, 90, 226);
   --confirm-border: rgb(63, 110, 240);
 
@@ -29,4 +31,22 @@
 body {
   background: var(--bg);
   user-select: none;
+}
+
+.ContextMenuContent {
+  border-radius: var(--radius);
+  background: var(--surface-1);
+  border: 1px solid var(--stroke);
+  overflow: hidden;
+}
+.ContextMenuItem {
+  font-size: 15px;
+  color: white;
+  padding: 5px 20px;
+  user-select: none;
+  outline: none;
+
+  &:hover {
+    background: var(--surface-2);
+  }
 }

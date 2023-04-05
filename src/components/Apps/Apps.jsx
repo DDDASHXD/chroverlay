@@ -63,6 +63,7 @@ const Apps = (props) => {
             id={app.id}
             deleteApp={(id) => props.deleteApp(id)}
             noDelete={app.noDelete}
+            setName={(id, name) => props.setName(id, name)}
           />
         ))}
       </div>

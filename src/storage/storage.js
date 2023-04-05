@@ -24,4 +24,10 @@ const removeApp = (id) => {
   localStorage.setItem("apps", JSON.stringify(filtered));
 };
 
-export { getApps, addApp, removeApp };
+const renameApp = (id, name) => {
+  let apps = JSON.parse(localStorage.getItem("apps"));
+  apps[id].label = name;
+  localStorage.setItem("apps", JSON.stringify(apps));
+};
+
+export { getApps, addApp, removeApp, renameApp };

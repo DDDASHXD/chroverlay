@@ -1,10 +1,15 @@
 import React from "react";
-import { ChevronLeft, ChevronRight, Reload } from "tabler-icons-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  Reload,
+  Lock,
+  LockOpen,
+} from "tabler-icons-react";
 
 const Window = (props) => {
   const [dragging, setDragging] = React.useState(false);
   const [coords, setCoords] = React.useState({ x: 0, y: 0 });
-  const window = React.useRef(null);
 
   const [oldCoords, setOldCoords] = React.useState({ x: 0, y: 0 });
   const [newCoords, setNewCoords] = React.useState({ x: 0, y: 0 });
@@ -15,6 +20,11 @@ const Window = (props) => {
   const [currentTitle, setCurrentTitle] = React.useState("");
 
   const webFrame = React.useRef(null);
+  const window = React.useRef(null);
+  const urlInputRef = React.useRef(null);
+
+  const [webFrameReady, setWebFrameReady] = React.useState(false);
+  const [webFrameLoading, setWebFrameLoading] = React.useState(false);
 
   const [addModal, setAddModal] = React.useState(false);
 
@@ -38,17 +48,33 @@ const Window = (props) => {
       } else {
         setUrl(urlInput);
       }
+    } else if (e.keyCode === 27) {
+      setUrlInput(webFrame.current.getURL());
+      urlInputRef.current.blur();
     }
   };
 
   React.useEffect(() => {
     setUrl(props.href);
-    webFrame.current.addEventListener("did-navigate", (event) => {
-      setUrlInput(event.url);
+
+    webFrame.current.addEventListener("did-navigate", (e) => {
+      setUrlInput(e.url);
     });
 
-    webFrame.current.addEventListener("page-title-updated", (event) => {
-      setCurrentTitle(event.title);
+    webFrame.current.addEventListener("dom-ready", (e) => {
+      setWebFrameReady(true);
+    });
+
+    webFrame.current.addEventListener("page-title-updated", (e) => {
+      setCurrentTitle(e.title);
+    });
+
+    webFrame.current.addEventListener("load-commit", (e) => {
+      setWebFrameLoading(true);
+    });
+
+    webFrame.current.addEventListener("did-finish-load", (e) => {
+      setWebFrameLoading(false);
     });
   }, []);
 
@@ -131,22 +157,46 @@ const Window = (props) => {
             <button
               className="navBtn left"
               onClick={() => webFrame.current.goBack()}
+              disabled={webFrameReady && !webFrame.current.canGoBack()}
             >
-              <ChevronLeft size="15" />
+              <ChevronLeft
+                size="15"
+                color={`${
+                  webFrameReady && webFrame.current.canGoBack()
+                    ? "var(--fg)"
+                    : "var(--fg-gray)"
+                }`}
+              />
             </button>
             <button
               className="navBtn right"
+              disabled={webFrameReady && !webFrame.current.canGoForward()}
               onClick={() => webFrame.current.goForward()}
             >
-              <ChevronRight size="15" />
+              <ChevronRight
+                size="15"
+                color={`${
+                  webFrameReady && webFrame.current.canGoForward()
+                    ? "var(--fg)"
+                    : "var(--fg-gray)"
+                }`}
+              />
             </button>
             <button
-              className="navBtn reload"
+              className={`navBtn reload ${webFrameLoading ? "loading" : ""}`}
               onClick={() => webFrame.current.reload()}
             >
               <Reload size="15" />
             </button>
             <div className="search">
+              <div className="sslIcon">
+                {webFrameReady &&
+                webFrame.current.getURL().includes("https://") ? (
+                  <Lock color="var(--success)" size="13" />
+                ) : (
+                  <LockOpen color="var(--fg-gray)" />
+                )}
+              </div>
               <input
                 type="text"
                 placeholder="Enter url..."
@@ -155,6 +205,7 @@ const Window = (props) => {
                 onChange={(e) => setUrlInput(e.target.value)}
                 value={urlInput}
                 defaultValue={props.href}
+                ref={urlInputRef}
               />
             </div>
             <button className="addbtn" onClick={() => setAddModal(true)}>
